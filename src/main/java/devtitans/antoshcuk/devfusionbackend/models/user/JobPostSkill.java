@@ -20,7 +20,8 @@ public class JobPostSkill {
     @Column(name = "id")
     private int id;
 
-    @OneToMany(mappedBy = "jobPostSkill")
-    private List<Skill> skill;
+    @ManyToOne()
+    @JoinColumn(name = "skill_set_id", referencedColumnName = "id")
+    private Skill skill;
 
 }

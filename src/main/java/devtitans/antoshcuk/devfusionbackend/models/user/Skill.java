@@ -26,9 +26,8 @@ public class Skill {
     @OneToMany(mappedBy = "skill")
     private List<SeekerSkillSet> seekerSkills;
 
-    @ManyToOne
-    @JoinColumn(name = "id", referencedColumnName = "skill_set_id")
-    private JobPostSkill jobPostSkill;
+    @OneToMany(mappedBy = "skill")
+    private List<JobPostSkill> jobPostSkills;
 
 
 
