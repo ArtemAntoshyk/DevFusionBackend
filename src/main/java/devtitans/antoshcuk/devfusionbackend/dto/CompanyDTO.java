@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CompanyDto {
+public class CompanyDTO {
     private int id;
     private String name;
     private String businessStreamName;
@@ -21,4 +21,5 @@ public class CompanyDto {
     private Date establishmentDate;
     private String companyWebsiteUrl;
     private List<String> companyImages;
+
 }

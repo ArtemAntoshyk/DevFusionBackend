@@ -1,56 +1,55 @@
 package devtitans.antoshcuk.devfusionbackend.controllers;
 
-import devtitans.antoshcuk.devfusionbackend.dto.JobPostDto;
+import devtitans.antoshcuk.devfusionbackend.dto.JobPostDTO;
 import devtitans.antoshcuk.devfusionbackend.models.job.JobPost;
 import devtitans.antoshcuk.devfusionbackend.services.JobPostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
+@RequestMapping("/api/jobs")
 @CrossOrigin(origins = "http://localhost:63343")
-public class MainController {
-
+public class JobController {
+    private final ModelMapper modelMapper;
     private final JobPostService jobPostService;
 
     @Autowired
-    public MainController(JobPostService jobPostService) {
+    public JobController(@Qualifier("modelMapper") ModelMapper modelMapper, JobPostService jobPostService) {
+        this.modelMapper = modelMapper;
         this.jobPostService = jobPostService;
     }
 
-    @GetMapping("/allJobPosts")
-    @ResponseBody
-    public List<JobPostDto> getAllJobs() {
+    @GetMapping("/all_job_posts")
+    public List<JobPostDTO> getAllJobs() {
         System.out.println("Get Request");
         return jobPostService.getJobPosts().stream()
                 .map(this::convertJobPostToJobPostDto)
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/jobPostsByCompany/{companyId}")
-    @ResponseBody
-    public List<JobPostDto> getJobsByCompany(@PathVariable("companyId") int companyId) {
+    @GetMapping("/job_posts_by_company/{companyId}")
+    public List<JobPostDTO> getJobsByCompany(@PathVariable("companyId") int companyId) {
         System.out.println("Get Request");
         return jobPostService.getJobPostsByCompanyId(companyId).stream()
                 .map(this::convertJobPostToJobPostDto)
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/jobById/{jobPostId}")
+    @GetMapping("/job_by_id/{jobPostId}")
     @ResponseBody
-    public JobPostDto getJobById(@PathVariable("jobPostId") int jobPostId) {
+    public JobPostDTO getJobById(@PathVariable("jobPostId") int jobPostId) {
         System.out.println("Get Request");
         return convertJobPostToJobPostDto(jobPostService.getJobPostById(jobPostId));
     }
 
-    @GetMapping("/allJobPostsPagination")
-    @ResponseBody
-    public List<JobPostDto> getAllJobs(@RequestParam(defaultValue = "0") int page,
+    @GetMapping("/all_job_posts_pagination")
+    public List<JobPostDTO> getAllJobs(@RequestParam(defaultValue = "0") int page,
                                        @RequestParam(defaultValue = "10") int size) {
         Page<JobPost> jobPosts = jobPostService.getAllJobPosts(page, size);
         return jobPosts.stream()
@@ -59,9 +58,8 @@ public class MainController {
     }
 
 
-    private JobPostDto convertJobPostToJobPostDto(JobPost jobPost) {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(jobPost, JobPostDto.class);
+    private JobPostDTO convertJobPostToJobPostDto(JobPost jobPost) {
+        return modelMapper.map(jobPost, JobPostDTO.class);
     }
 
 }

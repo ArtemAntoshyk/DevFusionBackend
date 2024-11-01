@@ -1,6 +1,5 @@
 package devtitans.antoshcuk.devfusionbackend.dto;
 
-import devtitans.antoshcuk.devfusionbackend.dto.CompanyDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,13 +11,13 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-public class JobPostDto {
+public class JobPostDTO {
     private int id;
-    private CompanyDto company;
+    private CompanyBaseDTO company;
     private JobTypeDTO type;
     private JobGradationDTO gradation;
-    private String jobType;
-    private String jobGradation;
+//    private String jobType;
+//    private String jobGradation;
     private String title;
     private String jobDescription;
     private String jobLocation;

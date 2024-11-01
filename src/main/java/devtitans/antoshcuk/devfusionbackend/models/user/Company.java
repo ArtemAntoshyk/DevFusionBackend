@@ -41,7 +41,7 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private List<CompanyImage> companyImages;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
     private List<JobPost> jobPosts;
 
     public Company(UserAccount user, String name, String businessStreamName, String companyLogo, String companyDescription, Date establishmentDate, String companyWebsiteUrl, List<CompanyImage> companyImages, List<JobPost> jobPosts) {

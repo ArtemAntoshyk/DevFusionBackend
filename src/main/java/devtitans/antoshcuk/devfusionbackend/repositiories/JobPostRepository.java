@@ -9,10 +9,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import java.util.List;
 
 @EnableJpaRepositories
-public interface JobPostRepositories extends JpaRepository<JobPost, Integer> {
+public interface JobPostRepository extends JpaRepository<JobPost, Integer> {
 
     public List<JobPost> findJobPostsByCompanyId(int companyId);
 
     // Метод для получения всех постов с пагинацией
     Page<JobPost> findAll(Pageable pageable);
+
+
 }
